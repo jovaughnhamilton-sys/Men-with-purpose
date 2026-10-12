@@ -1,61 +1,62 @@
-/* Men of Purpose: English / Spanish / Portuguese interface selector.
-   Does not translate Scripture or user journal entries. */
-(function () {
-  'use strict';
-  const translations = {
-    en: {Home:'Home',Journey:'Journey',Journal:'Journal',Bible:'Bible',More:'More',language:'Language',welcome:'Walk with purpose today.',settings:'Settings & Account',prayer:'My Prayer Journal'},
-    es: {Home:'Inicio',Journey:'Camino',Journal:'Diario',Bible:'Biblia',More:'Más',language:'Idioma',welcome:'Camina con propósito hoy.',settings:'Configuración y cuenta',prayer:'Mi diario de oración'},
-    pt: {Home:'Início',Journey:'Jornada',Journal:'Diário',Bible:'Bíblia',More:'Mais',language:'Idioma',welcome:'Caminhe com propósito hoje.',settings:'Configurações e conta',prayer:'Meu diário de oração'}
-  };
-  const nav = [['homeTab','Home','⌂'],['journeyTab','Journey','◫'],['journalTab','Journal','✎'],['bibleTab','Bible','✝'],['moreTab','More','⚙']];
-  const phrases = {'Walk with purpose today.':'welcome','Settings & Account':'settings','My Prayer Journal':'prayer'};
-  let busy = false;
-  const stored = () => { try { return localStorage.getItem('mop-language') || 'en'; } catch (_) { return 'en'; } };
-  const originalText = new WeakMap();
-  function apply() {
-    if (busy) return;
-    busy = true;
-    try {
-      const code = translations[stored()] ? stored() : 'en', t = translations[code];
-      document.documentElement.lang = code;
-      const select = document.getElementById('mop-language');
-      if (select) select.value = code;
-      const label = document.getElementById('mop-language-label');
-      if (label) label.textContent = t.language;
-      for (const [id, key, symbol] of nav) {
-        const node = document.getElementById(id);
-        if (node) node.textContent = symbol + ' ' + t[key];
-      }
-      const root = document.getElementById('content');
-      if (!root) return;
-      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-      let node;
-      while ((node = walker.nextNode())) {
-        if (node.parentElement && ['TEXTAREA','SCRIPT','STYLE','OPTION'].includes(node.parentElement.tagName)) continue;
-        let original = originalText.get(node);
-        if (original === undefined) { original = node.nodeValue; originalText.set(node, original); }
-        const trimmed = original.trim();
-        if (phrases[trimmed]) node.nodeValue = original.replace(trimmed, t[phrases[trimmed]]);
-      }
-    } finally { busy = false; }
-  }
-  function start() {
-    const header = document.querySelector('.app > header');
-    if (!header || document.getElementById('mop-language')) return;
-    const wrap = document.createElement('div');
-    wrap.style.cssText = 'display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:12px;font-size:13px;color:white';
-    const label = document.createElement('label'); label.id = 'mop-language-label'; label.htmlFor = 'mop-language';
-    const select = document.createElement('select'); select.id = 'mop-language';
-    select.setAttribute('aria-label', 'Select app language');
-    select.style.cssText = 'width:auto;max-width:160px;padding:7px;border-radius:9px;background:white;color:#142e25;border:1px solid #c6a15b;font-size:13px';
-    for (const [code,name] of [['en','🇬🇧 English'],['es','🇪🇸 Español'],['pt','🇧🇷 Português']]) {
-      const opt = document.createElement('option'); opt.value=code; opt.textContent=name; select.appendChild(opt);
-    }
-    select.addEventListener('change', () => { try { localStorage.setItem('mop-language', select.value); } catch (_) {} apply(); });
-    wrap.append('🌐 ', label, select); header.appendChild(wrap);
-    const root = document.getElementById('content');
-    if (root) new MutationObserver(() => { if (!busy) apply(); }).observe(root, {childList:true,subtree:true});
-    apply();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+/* Men of Purpose language pack v2 — English, Spanish and Portuguese.
+   Interface and devotional theme translations. Scripture remains WEB English.
+   User journal content is never translated or transmitted. */
+(function(){
+'use strict';
+const dict={"es": {"Walk with purpose today.": "Camina con propósito hoy.", "Your next step": "Tu próximo paso", "Day": "Día", "of 40": "de 40", "Good morning": "Buenos días", "Good afternoon": "Buenas tardes", "Good evening": "Buenas noches", "Faith grows through everyday choices. Make time for God and take your next step.": "La fe crece mediante las decisiones cotidianas. Dedica tiempo a Dios y da tu siguiente paso.", "Start today’s devotional": "Comenzar el devocional de hoy", "Explore today’s theme": "Explorar el tema de hoy", "Days completed": "Días completados", "Reading streak*": "Días seguidos de lectura*", "Saved verses": "Versículos guardados", "Your faith journey": "Tu camino de fe", "One day at a time. Progress stays on this device unless you connect an account.": "Un día a la vez. Tu progreso permanece en este dispositivo a menos que conectes una cuenta.", "View 40-day journey": "Ver el camino de 40 días", "Today’s Scripture": "Lectura bíblica de hoy", "Read in the Bible": "Leer en la Biblia", "The 40-day faith journey": "El camino de fe de 40 días", "Become the man God called you to be.": "Conviértete en el hombre que Dios te llamó a ser.", "Milestones": "Logros", "Mark a day complete only after you've read or reflected on it.": "Marca un día como completado solo después de leer o reflexionar.", "Read God’s Word": "Lee la Palabra de Dios", "Read God's Word": "Lee la Palabra de Dios", "Reflection": "Reflexión", "Prayer": "Oración", "Today's challenge": "Desafío de hoy", "Theme preview · Full devotional coming soon": "Vista previa del tema · Devocional completo próximamente", "Open Bible reader": "Abrir lector de la Biblia", "Share encouragement": "Compartir ánimo", "Download share card": "Descargar imagen para compartir", "Share message": "Compartir mensaje", "Mark day complete": "Marcar día completado", "Completed · Undo": "Completado · Deshacer", "Next day": "Día siguiente", "Holy Bible": "Santa Biblia", "All 66 books. Select a book and chapter. Internet is required to load Scripture.": "Los 66 libros. Selecciona un libro y un capítulo. Se necesita internet para cargar las Escrituras.", "Book": "Libro", "Chapter": "Capítulo", "Previous": "Anterior", "Next": "Siguiente", "Private reflections": "Reflexiones privadas", "My Prayer Journal": "Mi diario de oración", "What is on your heart?": "¿Qué hay en tu corazón?", "Save journal entry": "Guardar entrada", "entries": "entradas", "answered": "respondidas", "Answered": "Respondida", "Mark ongoing": "Marcar como pendiente", "Mark answered": "Marcar como respondida", "Delete": "Eliminar", "Personalize your journey": "Personaliza tu camino", "Settings & Account": "Configuración y cuenta", "Your first name (optional)": "Tu nombre (opcional)", "Save name": "Guardar nombre", "Reading text size": "Tamaño del texto", "Daily reading reminder": "Recordatorio diario de lectura", "Enable daily reminder": "Activar recordatorio diario", "Reminder time": "Hora del recordatorio", "Save reminder": "Guardar recordatorio", "Backup & transfer": "Copia de seguridad y transferencia", "Download backup": "Descargar copia", "Import backup": "Importar copia", "Account & cloud sync": "Cuenta y sincronización", "Sign in": "Iniciar sesión", "Create account": "Crear cuenta", "Sign out": "Cerrar sesión", "Open chapter": "Abrir capítulo", "Remove": "Quitar", "Retry": "Reintentar", "Loading WEB Scripture…": "Cargando las Escrituras WEB…", "Scripture could not load. Check your connection and try again.": "No se pudo cargar el texto bíblico. Revisa tu conexión e inténtalo de nuevo.", "Tap any verse to save or remove its bookmark.": "Toca cualquier versículo para guardarlo o quitarlo.", "Your journal stays in this browser unless you explicitly export it or connect cloud syncing. Clearing browser data can erase it. Avoid storing highly sensitive information.": "Tu diario permanece en este navegador a menos que lo exportes o actives la sincronización. Borrar los datos del navegador puede eliminarlo. Evita guardar información muy sensible.", "This is an in-app reminder. It appears when you open Men of Purpose after your chosen time; it cannot notify you while the app is closed.": "Este recordatorio aparece al abrir Men of Purpose después de la hora elegida; no puede avisarte con la aplicación cerrada.", "Export your private data to a file or restore it on another device. Keep backup files secure.": "Exporta tus datos privados a un archivo o restáuralos en otro dispositivo. Guarda las copias de forma segura.", "Write a prayer, reflection, or answered prayer…": "Escribe una oración, reflexión o respuesta a una oración…", "How should we greet you?": "¿Cómo quieres que te saludemos?", "You Are a New Creation": "Eres una nueva creación", "You Are God’s Workmanship": "Eres obra de Dios", "Strength in Your Weakness": "Fortaleza en tu debilidad", "Leading Through Love": "Liderar con amor", "Trusting God in Hardship": "Confiar en Dios en la dificultad", "Courage Over Fear": "Valor frente al miedo", "Called to Make a Difference": "Llamado a marcar la diferencia", "Seek God First": "Busca primero a Dios", "Pray Without Ceasing": "Ora sin cesar", "Practice Gratitude": "Practica la gratitud", "Love Your Neighbor": "Ama a tu prójimo", "Choose Forgiveness": "Elige perdonar", "Walk in Humility": "Camina con humildad", "Speak Truth": "Habla con verdad", "Listen Before Speaking": "Escucha antes de hablar", "Pursue Peace": "Busca la paz", "Guard Your Heart": "Guarda tu corazón", "Stand Against Temptation": "Resiste la tentación", "Practice Self-Control": "Practica el dominio propio", "Serve Others": "Sirve a los demás", "Honor Your Family": "Honra a tu familia", "Lead With Patience": "Lidera con paciencia", "Work With Integrity": "Trabaja con integridad", "Give Generously": "Da con generosidad", "Trust God With Money": "Confía tus finanzas a Dios", "Persevere in Trials": "Persevera en las pruebas", "Encourage a Brother": "Anima a un hermano", "Be a Peacemaker": "Sé un pacificador", "Choose Compassion": "Elige la compasión", "Act Justly": "Actúa con justicia", "Be Faithful in Small Things": "Sé fiel en lo pequeño", "Grow in Wisdom": "Crece en sabiduría", "Renew Your Mind": "Renueva tu mente", "Be Accountable": "Rinde cuentas", "Walk in the Light": "Camina en la luz", "Make Time for Rest": "Dedica tiempo al descanso", "Share Your Faith": "Comparte tu fe", "Mentor Another Man": "Guía a otro hombre", "Build a Legacy of Love": "Construye un legado de amor", "Stand Firm in Faith": "Mantente firme en la fe"}, "pt": {"Walk with purpose today.": "Caminhe com propósito hoje.", "Your next step": "Seu próximo passo", "Day": "Dia", "of 40": "de 40", "Good morning": "Bom dia", "Good afternoon": "Boa tarde", "Good evening": "Boa noite", "Faith grows through everyday choices. Make time for God and take your next step.": "A fé cresce por meio das escolhas diárias. Reserve tempo para Deus e dê seu próximo passo.", "Start today’s devotional": "Iniciar o devocional de hoje", "Explore today’s theme": "Explorar o tema de hoje", "Days completed": "Dias concluídos", "Reading streak*": "Sequência de leitura*", "Saved verses": "Versículos salvos", "Your faith journey": "Sua jornada de fé", "One day at a time. Progress stays on this device unless you connect an account.": "Um dia de cada vez. Seu progresso fica neste dispositivo, a menos que você conecte uma conta.", "View 40-day journey": "Ver jornada de 40 dias", "Today’s Scripture": "Leitura bíblica de hoje", "Read in the Bible": "Ler na Bíblia", "The 40-day faith journey": "A jornada de fé de 40 dias", "Become the man God called you to be.": "Torne-se o homem que Deus chamou você para ser.", "Milestones": "Marcos", "Mark a day complete only after you've read or reflected on it.": "Marque um dia como concluído somente após ler ou refletir.", "Read God’s Word": "Leia a Palavra de Deus", "Read God's Word": "Leia a Palavra de Deus", "Reflection": "Reflexão", "Prayer": "Oração", "Today's challenge": "Desafio de hoje", "Theme preview · Full devotional coming soon": "Prévia do tema · Devocional completo em breve", "Open Bible reader": "Abrir leitor da Bíblia", "Share encouragement": "Compartilhar incentivo", "Download share card": "Baixar imagem para compartilhar", "Share message": "Compartilhar mensagem", "Mark day complete": "Marcar dia como concluído", "Completed · Undo": "Concluído · Desfazer", "Next day": "Próximo dia", "Holy Bible": "Bíblia Sagrada", "All 66 books. Select a book and chapter. Internet is required to load Scripture.": "Todos os 66 livros. Selecione um livro e capítulo. É necessário internet para carregar as Escrituras.", "Book": "Livro", "Chapter": "Capítulo", "Previous": "Anterior", "Next": "Próximo", "Private reflections": "Reflexões privadas", "My Prayer Journal": "Meu diário de oração", "What is on your heart?": "O que está em seu coração?", "Save journal entry": "Salvar anotação", "entries": "anotações", "answered": "respondidas", "Answered": "Respondida", "Mark ongoing": "Marcar como pendente", "Mark answered": "Marcar como respondida", "Delete": "Excluir", "Personalize your journey": "Personalize sua jornada", "Settings & Account": "Configurações e conta", "Your first name (optional)": "Seu nome (opcional)", "Save name": "Salvar nome", "Reading text size": "Tamanho do texto", "Daily reading reminder": "Lembrete diário de leitura", "Enable daily reminder": "Ativar lembrete diário", "Reminder time": "Horário do lembrete", "Save reminder": "Salvar lembrete", "Backup & transfer": "Backup e transferência", "Download backup": "Baixar backup", "Import backup": "Importar backup", "Account & cloud sync": "Conta e sincronização", "Sign in": "Entrar", "Create account": "Criar conta", "Sign out": "Sair", "Open chapter": "Abrir capítulo", "Remove": "Remover", "Retry": "Tentar novamente", "Loading WEB Scripture…": "Carregando as Escrituras WEB…", "Scripture could not load. Check your connection and try again.": "Não foi possível carregar o texto bíblico. Verifique sua conexão e tente novamente.", "Tap any verse to save or remove its bookmark.": "Toque em qualquer versículo para salvar ou remover.", "Your journal stays in this browser unless you explicitly export it or connect cloud syncing. Clearing browser data can erase it. Avoid storing highly sensitive information.": "Seu diário fica neste navegador, a menos que você o exporte ou ative a sincronização. Limpar os dados do navegador pode apagá-lo. Evite armazenar informações muito sensíveis.", "This is an in-app reminder. It appears when you open Men of Purpose after your chosen time; it cannot notify you while the app is closed.": "Este lembrete aparece quando você abre o Men of Purpose após o horário escolhido; não pode avisar com o aplicativo fechado.", "Export your private data to a file or restore it on another device. Keep backup files secure.": "Exporte seus dados privados para um arquivo ou restaure-os em outro dispositivo. Mantenha os backups seguros.", "Write a prayer, reflection, or answered prayer…": "Escreva uma oração, reflexão ou oração respondida…", "How should we greet you?": "Como devemos cumprimentar você?", "You Are a New Creation": "Você é uma nova criação", "You Are God’s Workmanship": "Você é obra de Deus", "Strength in Your Weakness": "Força na sua fraqueza", "Leading Through Love": "Liderar com amor", "Trusting God in Hardship": "Confiar em Deus nas dificuldades", "Courage Over Fear": "Coragem acima do medo", "Called to Make a Difference": "Chamado para fazer a diferença", "Seek God First": "Busque Deus primeiro", "Pray Without Ceasing": "Ore sem cessar", "Practice Gratitude": "Pratique a gratidão", "Love Your Neighbor": "Ame o próximo", "Choose Forgiveness": "Escolha perdoar", "Walk in Humility": "Ande com humildade", "Speak Truth": "Fale a verdade", "Listen Before Speaking": "Ouça antes de falar", "Pursue Peace": "Busque a paz", "Guard Your Heart": "Guarde seu coração", "Stand Against Temptation": "Resista à tentação", "Practice Self-Control": "Pratique o autocontrole", "Serve Others": "Sirva aos outros", "Honor Your Family": "Honre sua família", "Lead With Patience": "Lidere com paciência", "Work With Integrity": "Trabalhe com integridade", "Give Generously": "Doe com generosidade", "Trust God With Money": "Confie suas finanças a Deus", "Persevere in Trials": "Persevere nas provações", "Encourage a Brother": "Encoraje um irmão", "Be a Peacemaker": "Seja um pacificador", "Choose Compassion": "Escolha a compaixão", "Act Justly": "Aja com justiça", "Be Faithful in Small Things": "Seja fiel nas pequenas coisas", "Grow in Wisdom": "Cresça em sabedoria", "Renew Your Mind": "Renove sua mente", "Be Accountable": "Preste contas", "Walk in the Light": "Ande na luz", "Make Time for Rest": "Reserve tempo para descansar", "Share Your Faith": "Compartilhe sua fé", "Mentor Another Man": "Oriente outro homem", "Build a Legacy of Love": "Construa um legado de amor", "Stand Firm in Faith": "Permaneça firme na fé"}};
+const labels={en:['Home','Journey','Journal','Bible','More','Language'],es:['Inicio','Camino','Diario','Biblia','Más','Idioma'],pt:['Início','Jornada','Diário','Bíblia','Mais','Idioma']};
+const ids=['homeTab','journeyTab','journalTab','bibleTab','moreTab'];
+const symbols=['⌂ ','◫ ','✎ ','✝ ','⚙ '];
+const original=new WeakMap(),attributes=new WeakMap();
+let busy=false;
+function language(){try{let v=localStorage.getItem('mop-language')||'en';return labels[v]?v:'en'}catch(e){return 'en'}}
+function translateText(src,lang){
+if(lang==='en')return src;
+const d=dict[lang],trim=src.trim();
+if(d[trim])return src.replace(trim,d[trim]);
+let result=src;
+for(const [from,to] of Object.entries(d).sort((a,b)=>b[0].length-a[0].length)){
+  if(from.length<4)continue;
+  result=result.split(from).join(to);
+}
+result=result.replace(/\bDay (\d+) of 40\b/g,lang==='es'?'Día $1 de 40':'Dia $1 de 40');
+result=result.replace(/\bChapter (\d+)\b/g,lang==='es'?'Capítulo $1':'Capítulo $1');
+result=result.replace(/\b(\d+) of 40 days marked complete\b/g,lang==='es'?'$1 de 40 días completados':'$1 de 40 dias concluídos');
+return result;
+}
+function apply(){
+if(busy)return;busy=true;
+try{
+const lang=language();document.documentElement.lang=lang;
+const select=document.getElementById('mop-language');if(select)select.value=lang;
+const label=document.getElementById('mop-language-label');if(label)label.textContent=labels[lang][5];
+ids.forEach((id,i)=>{const e=document.getElementById(id);if(e)e.textContent=symbols[i]+labels[lang][i]});
+const root=document.getElementById('content');if(!root)return;
+const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
+while((n=walker.nextNode())){
+ const p=n.parentElement;
+ if(!p||['SCRIPT','STYLE','TEXTAREA','OPTION'].includes(p.tagName)||p.closest('.scripture,.journal-entry,.chapter-verse,#devotionalBible,#bibleText'))continue;
+ let src=original.get(n);if(src===undefined){src=n.nodeValue;original.set(n,src)}
+ const next=translateText(src,lang);if(n.nodeValue!==next)n.nodeValue=next;
+}
+root.querySelectorAll('[placeholder],[title]').forEach(el=>{
+ let saved=attributes.get(el);if(!saved){saved={placeholder:el.getAttribute('placeholder'),title:el.getAttribute('title')};attributes.set(el,saved)}
+ for(const key of ['placeholder','title'])if(saved[key]!=null)el.setAttribute(key,translateText(saved[key],lang));
+});
+}catch(e){console.warn('Language translation unavailable',e)}finally{busy=false}
+}
+function start(){
+const header=document.querySelector('.app > header');if(!header)return;
+if(!document.getElementById('mop-language')){
+ const wrap=document.createElement('div');wrap.style.cssText='display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:12px;font-size:13px;color:white';
+ const label=document.createElement('label');label.id='mop-language-label';label.htmlFor='mop-language';
+ const select=document.createElement('select');select.id='mop-language';select.setAttribute('aria-label','Select app language');select.style.cssText='width:auto;max-width:160px;padding:7px;border-radius:9px;background:white;color:#142e25;border:1px solid #c6a15b;font-size:13px';
+ for(const [code,name] of [['en','🇬🇧 English'],['es','🇪🇸 Español'],['pt','🇧🇷 Português']]){const o=document.createElement('option');o.value=code;o.textContent=name;select.appendChild(o)}
+ select.addEventListener('change',()=>{try{localStorage.setItem('mop-language',select.value)}catch(e){}apply()});
+ wrap.append('🌐 ',label,select);header.appendChild(wrap);
+}
+const root=document.getElementById('content');if(root)new MutationObserver(()=>{if(!busy)apply()}).observe(root,{subtree:true,childList:true});
+apply();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
