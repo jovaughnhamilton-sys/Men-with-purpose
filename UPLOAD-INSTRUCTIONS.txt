@@ -1,0 +1,13 @@
+MEN OF PURPOSE: BIBLE STORIES AND PERSONAL REFLECTION
+
+1. Extract this ZIP.
+2. Open https://github.com/jovaughnhamilton-sys/Men-with-purpose
+3. Choose Add file, then Upload files.
+4. Upload index.html, mop-languages.js and sw.js into the repository root on main. Replace the existing files and commit.
+5. Wait for GitHub Pages to finish publishing, then close and reopen the app and refresh.
+
+Includes matching Bible stories and takeaways for the seven complete devotionals, plus personal reflection questions and a writing space on all 40 days. Saved reflections appear in My Prayer Journal and existing backups. Days 8 through 40 remain theme previews. Save a reflection before leaving its page.
+
+Validated: all 40 day renders, seven stories, saving and updating reflections, reopening saved text, safe text rendering, journal labels, backup inclusion and deletion. Visual browser verification was not performed.
+
+Prepared from main commit 520c256327a7da45dc8001a18026cdf778121988 on October 13, 2026. Review newer repository changes before overwriting these files.
