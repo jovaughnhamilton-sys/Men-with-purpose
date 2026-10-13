@@ -1,4 +1,2 @@
-/* Optional: set these values from your own Supabase project to enable accounts.
-   Leave blank until secure row-level security is configured.
-   NEVER place a Supabase service_role key here. */
-window.MOP_CLOUD = {url:"",anonKey:""};
+/* Public client configuration. Never add server secrets here. */
+window.MOP_CLOUD = {url:"https://bxpkqrhlvjtgucoxxaue.supabase.co",anonKey:"sb_publishable_CG-S8RDATuIJDHI6jcVOsA_T4VNucaw",googleEnabled:false,appleEnabled:false};

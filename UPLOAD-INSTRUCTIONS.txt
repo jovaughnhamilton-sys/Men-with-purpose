@@ -1,13 +1,3 @@
-MEN OF PURPOSE: BIBLE STORIES AND PERSONAL REFLECTION
+Upload and replace index.html, mop-accounts.js, cloud-config.js and sw.js in the repository root. Preserve the current mop-languages.js and image assets. Email/password registration and sign-in are enabled. Google and Apple are disabled because the providers are not configured. After publication, open More > Account & cloud sync, create an account, verify the email and sign in. Then save a reflection and check it on a second signed-in device. The app separates guest and account data; copy guest progress explicitly if desired.
 
-1. Extract this ZIP.
-2. Open https://github.com/jovaughnhamilton-sys/Men-with-purpose
-3. Choose Add file, then Upload files.
-4. Upload index.html, mop-languages.js and sw.js into the repository root on main. Replace the existing files and commit.
-5. Wait for GitHub Pages to finish publishing, then close and reopen the app and refresh.
-
-Includes matching Bible stories and takeaways for the seven complete devotionals, plus personal reflection questions and a writing space on all 40 days. Saved reflections appear in My Prayer Journal and existing backups. Days 8 through 40 remain theme previews. Save a reflection before leaving its page.
-
-Validated: all 40 day renders, seven stories, saving and updating reflections, reopening saved text, safe text rendering, journal labels, backup inclusion and deletion. Visual browser verification was not performed.
-
-Prepared from main commit 520c256327a7da45dc8001a18026cdf778121988 on October 13, 2026. Review newer repository changes before overwriting these files.
+Validation: mocked account tests pass, including unverified signup, account separation, sync conflicts, and sign-out. Live database inspection confirms forced RLS, owner policies and denied anonymous access. The live synthetic write test was blocked by automatic approval review, so no synthetic accounts were created. Real email delivery and cross-device login are not yet tested.
