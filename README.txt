@@ -1,4 +1,5 @@
-Men of Purpose language selector (English, Spanish, Portuguese).
-Upload mop-languages.js to the GitHub repository root.
-To activate it, add <script src="mop-languages.js"></script> immediately before </body> in index.html.
-This version translates selected interface labels, not all devotional text or Bible passages.
+Men of Purpose development review
+See README.md and docs/COMPLETION-REPORT.md for current instructions.
+English devotional drafts and WEB Scripture are preserved; selected interface
+labels remain available in English, Spanish, and Portuguese.
+Do not overwrite production or run staged SQL without approval.

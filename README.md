@@ -1,29 +1,55 @@
-# Men of Purpose 2.0 — Free Devotional & Bible Reader
+# Men of Purpose — development review
 
-An initiative of Triple J’s Solutions Enterprises Ltd.
+A Christian devotional app under **Purpose Driven** and **Triple J’s Solutions Enterprises Ltd.**
 
-## What's included
-- Personalized greeting and featured next devotional.
-- WEB Bible reader, 66 books, adjustable font size and tap-to-bookmark verses. Bible content loads online from bible-api.com (third-party service).
-- 40-day journey and completion milestones. **Only days 1–7 contain full original devotionals; days 8–40 are theme previews.**
-- Multiple private journal entries, answered-prayer marking, deletion.
-- Downloadable branded PNG sharing cards and text sharing.
-- In-app reading reminders **only when the website is opened after the chosen time**. No push/background notifications.
-- Backup and restore JSON for manual device transfers.
-- **Optional real email accounts/cloud sync** via Supabase after owner configuration; disabled until configured. Cloud transfer is manually triggered, not automatic.
+This is the review build on `development/men-of-purpose-2026-10-17`. Nothing in this branch authorizes production deployment, live SQL, provider changes, or editorial publication.
 
-## Publish on existing GitHub Pages
-Upload **index.html, sw.js, manifest.webmanifest, icon.svg, cloud-config.js** to the ROOT of the `main` branch of `jovaughnhamilton-sys/Men-with-purpose`. Overwrite old files if asked. `SUPABASE-SETUP.sql` and README are reference docs, not required to run. Pages remains set to main / (root). Refresh the website or close/reopen the installed app; a service worker may take another reload to update.
+## Included
 
-## Optional cloud setup (not required to use the app)
-1. Create a Supabase project on a suitable free plan (subject to provider limits and availability).
-2. Enable Email auth, configure allowed site URLs, and review authentication and privacy policies.
-3. Run `SUPABASE-SETUP.sql` in SQL Editor and verify row-level security is enabled.
-4. Copy **Project URL** and **publishable/anon key** (NEVER the service_role/secret key) into `cloud-config.js` and upload it to GitHub.
-5. Test sign-up, sign-in, upload and restore with two different test accounts, verifying they cannot read each other's data.
-6. Before inviting users to cloud sync private journals, create a privacy policy and review data protection and vendor practices.
+- Official, pinned **World English Bible Classic**: 66 books, 1,189 chapters, 31,103 verse markers; complete offline reading after a successful online installation. Publisher source archives, reproducible import and independent verse checks are included. No third-party Scripture API.
+- All 40 original devotional drafts with prayers, challenges, contextual readings and reflection questions. Original first-seven messages retained; seven supplemental biblical stories. Every day is labelled for editorial review.
+- Green, cream and gold polish, original logo, accessible controls and mobile layouts.
+- Twelve monthly themes, month welcome and 40 curated day/song pairings drawn from four verified Apple Music recordings. Music playback needs connectivity and the streaming service.
+- Member-created public/private study groups, leader moderation, platform admin oversight, private-by-default community reflections with explicit sharing, and independently reviewed devotional submissions. **Community stays disabled until its staged schema is approved and tested against hosted staging.**
+- Account isolation and optimistic sync retained; stale authentication response handling and backup validation repaired.
 
-## Privacy and limitations
-Without cloud setup, all personal data remains in this browser's localStorage; clearing site data can erase it. Use Export Backup regularly. Journal entries are not end-to-end encrypted. When cloud sync is enabled, uploaded journal content is stored on the configured Supabase project. Do not promise end-to-end encryption or absolute privacy. Bible text comes from a third-party API, so it needs internet access and is subject to its reliability and policies. WEB is public domain in the United States; verify other jurisdictions and API terms.
+## Run locally
 
-This is a free website/PWA, not yet a submitted Android/iOS store app. No background push notifications are implemented.
+Serve the repository over localhost (service workers do not work on file URLs):
+
+```sh
+python3 -m http.server 8080 --bind 127.0.0.1
+```
+
+Open `http://127.0.0.1:8080`. Keep the first visit connected until the Bible reader says it is ready offline. A first visit without internet or browser storage eviction does not guarantee offline availability.
+
+`cloud-config.js` retains the existing public client configuration. **Do not sign into the production project for acceptance testing.** Supply a separate staging project configuration before testing real accounts or setting `communityEnabled: true`. Never place secret/service-role keys in this file. Guest Bible/devotional/journal testing needs no account.
+
+## Verification
+
+```sh
+npm ci
+npm test
+npm run test:permissions
+npx playwright install chromium
+npm run test:browser
+```
+
+Python 3 is required for the independent publisher text audit. Browser automation blocks all external requests, including the live Supabase project. If Chromium is already installed, set `QA_CHROMIUM_EXECUTABLE=/absolute/path/to/chromium`. Permissions tests use isolated PGlite PostgreSQL; they do not use or alter the hosted project. See the completion report for actual results and remaining staging checks.
+
+## Review documents
+
+- [Completion report](docs/COMPLETION-REPORT.md)
+- [Infrastructure findings](docs/INFRASTRUCTURE-REVIEW.md)
+- [Bible source, preservation and license](docs/BIBLE-PROVENANCE.md)
+- [40-day editorial review](docs/EDITORIAL-REVIEW.md)
+- [Community schema, permissions and rollout](supabase/COMMUNITY-REVIEW.md)
+- [Brand, monthly themes and authorized music](WORSHIP-AND-BRAND.md)
+
+The SDK is pinned locally at `vendor/supabase-2.117.3.js`; its MIT license is included. Bible text is public domain; the WEB name identifies a faithful copy, and is not exclusive property of the app. Devotional commentary is separate from Scripture.
+
+Personal journals and account-scoped caches are not end-to-end encrypted. No journal is automatically shared into community. The PWA is not yet an Apple App Store or Google Play release; closed-app push notifications are not implemented.
+
+## Release gates
+
+Review the completed drafts and preview, grant repository integration write access, verify hosted staging with two independent accounts, apply the proposed grant hardening and community migration only with approval, configure trusted admin identity and provider redirects, and approve deployment separately. Do not follow old upload instructions to overwrite `main`.

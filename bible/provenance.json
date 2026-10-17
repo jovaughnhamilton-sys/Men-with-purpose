@@ -1,0 +1,14 @@
+{
+  "source": "https://ebible.org/Scriptures/eng-web_usfx.zip",
+  "retrieved": "2026-10-17",
+  "archive_sha256": "acc7a504f99a61f55f49906383ba13f3dcd3882e7803d81ae01715b4a9a5801f",
+  "source_xml_sha256": "8be6e383fbc58f10833ced95038019b9cffd09722d76eeb9ea779d7212254862",
+  "verse_source": "https://ebible.org/Scriptures/eng-web_vpl.zip",
+  "verse_archive_sha256": "f30636bf611640f010df3ceb89f8442edc94a623850e5ae379674769a96656c0",
+  "verse_xml_sha256": "46d204906057948b82bb0a9a83b6b448098d53e09879abde5fd9c2b994d65d50",
+  "dataset_sha256": "370c4bc583de47320ac791a1ce7885c7b5fad273c8622af7a1a760ef9e2fe968",
+  "books": 66,
+  "chapters": 1189,
+  "verses": 31103,
+  "dataset_bytes": 4347856
+}

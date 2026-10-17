@@ -1,0 +1,110 @@
+{
+  "generatedAt": "2026-10-17T16:58:33.522Z",
+  "results": [
+    {
+      "name": "Navigation and layout at 320px",
+      "status": "PASS",
+      "detail": "All main screens render without horizontal overflow or uncaught exceptions."
+    },
+    {
+      "name": "Forty complete devotional days at 320px",
+      "status": "PASS",
+      "detail": "All 40 days include devotional, reflection, and local Scripture."
+    },
+    {
+      "name": "Private reflection and journal XSS defense at 320px",
+      "status": "PASS",
+      "detail": "Malicious markup persists as literal private text and does not execute."
+    },
+    {
+      "name": "Malformed backup rejected atomically at 320px",
+      "status": "PASS",
+      "detail": "Invalid name, completed days, font, reminder, and journal data rejected before confirmation or storage writes."
+    },
+    {
+      "name": "Community defaults, XSS, role controls and account isolation at 320px",
+      "status": "PASS",
+      "detail": "Mock-only community: private defaults, explicit sharing confirmation, escaped malicious content, hidden admin controls, cleared prior-account snapshot. Database authorization covered separately."
+    },
+    {
+      "name": "Offline shell, Bible and devotional at 320px",
+      "status": "PASS",
+      "detail": "Offline reload, previously unopened Revelation 22, day 40, all 66 books / 1,189 chapters / 31,103 verse slots."
+    },
+    {
+      "name": "External requests blocked at 320px",
+      "status": "PASS",
+      "detail": "0 external requests blocked; no live API/database traffic allowed."
+    },
+    {
+      "name": "Navigation and layout at 390px",
+      "status": "PASS",
+      "detail": "All main screens render without horizontal overflow or uncaught exceptions."
+    },
+    {
+      "name": "Forty complete devotional days at 390px",
+      "status": "PASS",
+      "detail": "All 40 days include devotional, reflection, and local Scripture."
+    },
+    {
+      "name": "Private reflection and journal XSS defense at 390px",
+      "status": "PASS",
+      "detail": "Malicious markup persists as literal private text and does not execute."
+    },
+    {
+      "name": "Malformed backup rejected atomically at 390px",
+      "status": "PASS",
+      "detail": "Invalid name, completed days, font, reminder, and journal data rejected before confirmation or storage writes."
+    },
+    {
+      "name": "Community defaults, XSS, role controls and account isolation at 390px",
+      "status": "PASS",
+      "detail": "Mock-only community: private defaults, explicit sharing confirmation, escaped malicious content, hidden admin controls, cleared prior-account snapshot. Database authorization covered separately."
+    },
+    {
+      "name": "Offline shell, Bible and devotional at 390px",
+      "status": "PASS",
+      "detail": "Offline reload, previously unopened Revelation 22, day 40, all 66 books / 1,189 chapters / 31,103 verse slots."
+    },
+    {
+      "name": "External requests blocked at 390px",
+      "status": "PASS",
+      "detail": "0 external requests blocked; no live API/database traffic allowed."
+    },
+    {
+      "name": "Navigation and layout at 1280px",
+      "status": "PASS",
+      "detail": "All main screens render without horizontal overflow or uncaught exceptions."
+    },
+    {
+      "name": "Forty complete devotional days at 1280px",
+      "status": "PASS",
+      "detail": "All 40 days include devotional, reflection, and local Scripture."
+    },
+    {
+      "name": "Private reflection and journal XSS defense at 1280px",
+      "status": "PASS",
+      "detail": "Malicious markup persists as literal private text and does not execute."
+    },
+    {
+      "name": "Malformed backup rejected atomically at 1280px",
+      "status": "PASS",
+      "detail": "Invalid name, completed days, font, reminder, and journal data rejected before confirmation or storage writes."
+    },
+    {
+      "name": "Community defaults, XSS, role controls and account isolation at 1280px",
+      "status": "PASS",
+      "detail": "Mock-only community: private defaults, explicit sharing confirmation, escaped malicious content, hidden admin controls, cleared prior-account snapshot. Database authorization covered separately."
+    },
+    {
+      "name": "Offline shell, Bible and devotional at 1280px",
+      "status": "PASS",
+      "detail": "Offline reload, previously unopened Revelation 22, day 40, all 66 books / 1,189 chapters / 31,103 verse slots."
+    },
+    {
+      "name": "External requests blocked at 1280px",
+      "status": "PASS",
+      "detail": "0 external requests blocked; no live API/database traffic allowed."
+    }
+  ]
+}

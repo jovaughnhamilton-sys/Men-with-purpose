@@ -1,3 +1,5 @@
-Upload and replace index.html, mop-accounts.js, cloud-config.js and sw.js in the repository root. Preserve the current mop-languages.js and image assets. Email/password registration and sign-in are enabled. Google and Apple are disabled because the providers are not configured. After publication, open More > Account & cloud sync, create an account, verify the email and sign in. Then save a reflection and check it on a second signed-in device. The app separates guest and account data; copy guest progress explicitly if desired.
+DEVELOPMENT REVIEW ONLY — do not upload these files over production/main.
 
-Validation: mocked account tests pass, including unverified signup, account separation, sync conflicts, and sign-out. Live database inspection confirms forced RLS, owner policies and denied anonymous access. The live synthetic write test was blocked by automatic approval review, so no synthetic accounts were created. Real email delivery and cross-device login are not yet tested.
+Use README.md and docs/COMPLETION-REPORT.md for current review and testing steps.
+GitHub integration write access must be repaired before publishing the separate
+review branch. Deployment, live SQL, and editorial publication need explicit approval.
