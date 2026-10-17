@@ -1,5 +1,0 @@
-DEVELOPMENT REVIEW ONLY — do not upload these files over production/main.
-
-Use README.md and docs/COMPLETION-REPORT.md for current review and testing steps.
-GitHub integration write access must be repaired before publishing the separate
-review branch. Deployment, live SQL, and editorial publication need explicit approval.

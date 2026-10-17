@@ -33,12 +33,14 @@ npm test
 npm run test:permissions
 npx playwright install chromium
 npm run test:browser
+npm run test:upgrades
 ```
 
 Python 3 is required for the independent publisher text audit. Browser automation blocks all external requests, including the live Supabase project. If Chromium is already installed, set `QA_CHROMIUM_EXECUTABLE=/absolute/path/to/chromium`. Permissions tests use isolated PGlite PostgreSQL; they do not use or alter the hosted project. See the completion report for actual results and remaining staging checks.
 
 ## Review documents
 
+- [Installed-app updates and cleanup](docs/APP-UPDATES.md)
 - [Completion report](docs/COMPLETION-REPORT.md)
 - [Infrastructure findings](docs/INFRASTRUCTURE-REVIEW.md)
 - [Bible source, preservation and license](docs/BIBLE-PROVENANCE.md)

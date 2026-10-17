@@ -31,8 +31,8 @@ authentication settings, schema, functions, or deployments were changed.
    revision RPC. Ownership RLS still applies. Treat conflict protection as a
    cooperative client protocol until writes are restricted behind an approved
    server-side interface. Do not claim all clients must use revisions.
-4. Existing `SUPABASE-SETUP.sql` is older than the live revision/RPC schema.
-   Do not rerun it as a substitute for the inspected remote migration.
+4. The former `SUPABASE-SETUP.sql` was older than the live revision/RPC schema
+   and has been removed. It must not replace the inspected remote migration.
 5. Google and Apple UI flags are currently false. Provider credentials, verified
    redirects, email delivery and live multi-account authentication need staging
    verification. No provider was enabled in this change.
