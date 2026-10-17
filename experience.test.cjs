@@ -25,5 +25,5 @@ test('worship markup escapes editorial context and isolates external navigation'
   assert.ok(markup.includes('target="_blank"'));
   assert.ok(markup.includes('needs an internet connection'));
   assert.ok(!markup.includes('<audio'));
-  for(const song of exp.songs){const url=new URL(song.url);assert.equal(url.protocol,'https:');assert.equal(url.hostname,'music.apple.com');}
+  for(const song of exp.songs){const url=new URL(song.url);assert.equal(url.protocol,'https:');assert.equal(url.hostname,'www.youtube.com');assert.equal(url.pathname,'/watch');assert.match(url.searchParams.get('v'),/^[A-Za-z0-9_-]{11}$/);assert.equal(song.service,'YouTube');}
 });

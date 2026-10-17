@@ -21,18 +21,18 @@ The home and devotional screens show a song paired with the journey day; selecti
 
 ## Verified authorized catalog links
 
-Checked against the streaming service's own catalog on October 17, 2026:
+Official YouTube upload links checked on October 17, 2026; switched from Apple Music at the owner's request. No embedded player, playback tracking, or audio downloads were added:
 
 | Recording | Primary catalog source |
 | --- | --- |
-| Altar — Hulvey & Forrest Frank | https://music.apple.com/us/song/1676355606 |
-| GOOD DAY — Forrest Frank | https://music.apple.com/us/song/1729877847 |
-| Trust In God — Elevation Worship feat. Chris Brown | https://music.apple.com/us/song/1680569028 |
-| Praise — Elevation Worship feat. Brandon Lake, Chris Brown & Chandler Moore | https://music.apple.com/us/song/1680569035 |
+| Altar — Hulvey & Forrest Frank | https://www.youtube.com/watch?v=D9Ol15yaf_4 |
+| GOOD DAY — Forrest Frank | https://www.youtube.com/watch?v=Uc_HxKMKB_E |
+| Trust In God — Elevation Worship feat. Chris Brown | https://www.youtube.com/watch?v=iJE4yahElBQ |
+| Praise — Elevation Worship feat. Brandon Lake, Chris Brown & Chandler Moore | https://www.youtube.com/watch?v=raFnjGVkHe8 |
 
 Corroborating artist/label pages: https://www.reachrecords.com/artists/hulvey/ and https://www.elevationworship.com/music/praise .
 
-Links open Apple Music in a new tab or the user's associated app. No lyrics, recording, artwork, embeds, or downloaded audio are distributed. Song metadata remains available with the cached app; playback requires the external service and connectivity. Region availability and subscriptions vary. This is a curated optional companion, not an endorsement relationship or a claim to own third-party music.
+Links open YouTube in a new tab or the user's associated app. No lyrics, recording, artwork, embeds, or downloaded audio are distributed. Song metadata remains available with the cached app; playback requires the external service and connectivity. Video availability varies by region. This is a curated optional companion, not an endorsement relationship or a claim to own third-party music.
 
 ## Monthly focus references for editorial sign-off
 

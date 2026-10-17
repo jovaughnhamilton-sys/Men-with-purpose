@@ -1,6 +1,6 @@
 'use strict';
 // Increment after changing any shell or Bible asset. Never cache user/account responses.
-const CACHE='men-of-purpose-v6-web-community-review';
+const CACHE='men-of-purpose-v7-youtube-worship';
 const ASSETS=['./','./index.html','./icon.svg','./app-icon.png','./men-of-purpose-logo.png','./manifest.webmanifest','./cloud-config.js','./mop-languages.js','./mop-accounts.js','./mop-bible.js','./bible/web.json','./devotional-content.js','./mop-community.js','./mop-experience.js','./polish.css','./vendor/supabase-2.117.3.js'];
 const assetURLs=new Set(ASSETS.map(path=>new URL(path,self.registration.scope).href));
 self.addEventListener('install',event=>{

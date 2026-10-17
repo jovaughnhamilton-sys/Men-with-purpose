@@ -2,10 +2,10 @@
 (function (root) {
   'use strict';
   const songs = [
-    {id:'altar',title:'Altar',artist:'Hulvey & Forrest Frank',style:'Christian hip-hop / worship',url:'https://music.apple.com/us/song/1676355606',service:'Apple Music',connection:'An invitation to surrender and bring your whole life before God.'},
-    {id:'good-day',title:'GOOD DAY',artist:'Forrest Frank',style:'Christian pop / praise',url:'https://music.apple.com/us/song/1729877847',service:'Apple Music',connection:'A prompt to practice gratitude and notice God’s goodness in ordinary life.'},
-    {id:'trust',title:'Trust In God',artist:'Elevation Worship feat. Chris Brown',style:'Worship',url:'https://music.apple.com/us/song/1680569028',service:'Apple Music',connection:'A reminder to place your confidence in God through uncertainty.'},
-    {id:'praise',title:'Praise',artist:'Elevation Worship feat. Brandon Lake, Chris Brown & Chandler Moore',style:'Praise',url:'https://music.apple.com/us/song/1680569035',service:'Apple Music',connection:'A prompt to turn your attention toward God in praise.'}
+    {id:'altar',title:'Altar',artist:'Hulvey & Forrest Frank',style:'Christian hip-hop / worship',url:'https://www.youtube.com/watch?v=D9Ol15yaf_4',service:'YouTube',connection:'An invitation to surrender and bring your whole life before God.'},
+    {id:'good-day',title:'GOOD DAY',artist:'Forrest Frank',style:'Christian pop / praise',url:'https://www.youtube.com/watch?v=Uc_HxKMKB_E',service:'YouTube',connection:'A prompt to practice gratitude and notice God’s goodness in ordinary life.'},
+    {id:'trust',title:'Trust In God',artist:'Elevation Worship feat. Chris Brown',style:'Worship',url:'https://www.youtube.com/watch?v=iJE4yahElBQ',service:'YouTube',connection:'A reminder to place your confidence in God through uncertainty.'},
+    {id:'praise',title:'Praise',artist:'Elevation Worship feat. Brandon Lake, Chris Brown & Chandler Moore',style:'Praise',url:'https://www.youtube.com/watch?v=raFnjGVkHe8',service:'YouTube',connection:'A prompt to turn your attention toward God in praise.'}
   ];
   const months = [
     {title:'Made New in Christ',ref:'2 Corinthians 5:17',focus:'Begin again with grace, and practice the choices of a renewed life.',song:'altar'},
@@ -41,7 +41,7 @@
   function songMarkup(day,date,theme,reference) {
     const song=songFor(day,date);
     const context=theme?`Pairs with ${theme}${reference?' · '+reference:''}.`:`Pairs with this month’s focus: ${themeFor(date).title}.`;
-    return `<section class="card mop-worship" id="mop-daily-song" aria-labelledby="mop-song-title"><div class="eyebrow">Song for your devotional</div><h3 id="mop-song-title">${escape(song.title)}</h3><p class="mop-artist">${escape(song.artist)}</p><span class="pill">${escape(song.style)}</span><p>${escape(song.connection)}</p><p class="muted">${escape(context)}</p><a class="btn mop-listen" href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">Listen on ${escape(song.service)} <span aria-hidden="true">↗</span><span class="sr-only"> (opens a new tab)</span></a><p class="notice">Music opens on the streaming service and needs an internet connection. Availability and subscriptions vary. Scripture guides our teaching; songs are optional companions.</p></section>`;
+    return `<section class="card mop-worship" id="mop-daily-song" aria-labelledby="mop-song-title"><div class="eyebrow">Song for your devotional</div><h3 id="mop-song-title">${escape(song.title)}</h3><p class="mop-artist">${escape(song.artist)}</p><span class="pill">${escape(song.style)}</span><p>${escape(song.connection)}</p><p class="muted">${escape(context)}</p><a class="btn mop-listen" href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">Listen on ${escape(song.service)} <span aria-hidden="true">↗</span><span class="sr-only"> (opens a new tab)</span></a><p class="notice">Music opens on YouTube and needs an internet connection.  Scripture guides our teaching; songs are optional companions.</p></section>`;
   }
   function enhance(options={}) {
     const document=root.document;
