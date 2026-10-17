@@ -4,3 +4,5 @@ html{scroll-padding-bottom:100px}body{background:#eaece4;color:var(--ink);line-h
 @media(min-width:600px){.app{border-left:1px solid #dce1d4;border-right:1px solid #dce1d4}main{padding:24px}}
 @media(max-width:350px){header{padding:22px 16px}header .brand-row{gap:10px}header .brand-logo{width:58px;height:58px}header .brand-name{font-size:22px}.card{padding:16px}main{padding:14px}nav button{font-size:10px}.toolbar>.btn{flex:1 1 auto}.mop-listen{width:100%}.eyebrow{letter-spacing:.075em}.days{gap:6px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.mop-update-banner{margin:12px;border:1px solid #c6a15b;background:#f7f5ed}.mop-update-banner p{line-height:1.5}

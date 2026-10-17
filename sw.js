@@ -1,11 +1,11 @@
 'use strict';
 // Increment after changing any shell or Bible asset. Never cache user/account responses.
-const CACHE='men-of-purpose-v7-youtube-worship';
-const ASSETS=['./','./index.html','./icon.svg','./app-icon.png','./men-of-purpose-logo.png','./manifest.webmanifest','./cloud-config.js','./mop-languages.js','./mop-accounts.js','./mop-bible.js','./bible/web.json','./devotional-content.js','./mop-community.js','./mop-experience.js','./polish.css','./vendor/supabase-2.117.3.js'];
+const CACHE='men-of-purpose-v8-reliable-updates';
+const ASSETS=['./','./index.html','./icon.svg','./app-icon.png','./men-of-purpose-logo.png','./manifest.webmanifest','./cloud-config.js','./mop-languages.js','./mop-accounts.js','./mop-bible.js','./bible/web.json','./devotional-content.js','./mop-community.js','./mop-experience.js','./mop-updates.js','./polish.css','./vendor/supabase-2.117.3.js'];
 const assetURLs=new Set(ASSETS.map(path=>new URL(path,self.registration.scope).href));
 self.addEventListener('install',event=>{
   // Atomic install: a missing asset must not leave a worker claiming full offline support.
-  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS.map(path=>new Request(new URL(path,self.registration.scope),{cache:'reload'})))).then(()=>self.skipWaiting()));
 });
 self.addEventListener('activate',event=>{
   event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('men-of-purpose-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim()));
