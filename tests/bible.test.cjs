@@ -60,7 +60,7 @@ test('Scripture UI ignores stale results and removed elements; Retry preserves r
 test('service worker caches complete shell, scopes deletion, and never substitutes HTML for data',async()=>{
  const handlers={},deleted=[],cacheEntries=new Map();let network=0,added;
  const cache={addAll:async assets=>{added=assets},match:async request=>cacheEntries.get(typeof request==='string'?request:request.url),put:async()=>{}};
- const ctx={URL,Set,Promise,fetch:async()=>{network++;return{ok:false}},caches:{open:async()=>cache,keys:async()=>['another-app','men-of-purpose-v5-accounts','men-of-purpose-v6-web-community-review'],delete:async key=>deleted.push(key)},self:{registration:{scope:'https://example.org/app/'},location:{origin:'https://example.org'},skipWaiting:async()=>{},clients:{claim:async()=>{}},addEventListener:(name,handler)=>handlers[name]=handler}};
+ const ctx={URL,Set,Promise,fetch:async()=>{network++;return{ok:false}},caches:{open:async()=>cache,keys:async()=>['another-app','men-of-purpose-v5-accounts','men-of-purpose-v7-youtube-worship'],delete:async key=>deleted.push(key)},self:{registration:{scope:'https://example.org/app/'},location:{origin:'https://example.org'},skipWaiting:async()=>{},clients:{claim:async()=>{}},addEventListener:(name,handler)=>handlers[name]=handler}};
  vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(base,'sw.js'),'utf8'),ctx);
  let wait;handlers.install({waitUntil:p=>wait=p});await wait;assert.ok(added.includes('./bible/web.json'));
  handlers.activate({waitUntil:p=>wait=p});await wait;assert.deepEqual(deleted,['men-of-purpose-v5-accounts']);
@@ -80,13 +80,13 @@ test('offline readiness requires current controller handshake and complete curre
  }
  assert.equal(await api().offlineReady(),false);
  assert.equal(await api({version:'old-release',ready:true}).offlineReady(),false);
- assert.equal(await api({version:'men-of-purpose-v6-web-community-review',ready:false}).offlineReady(),false);
- assert.equal(await api({version:'men-of-purpose-v6-web-community-review',ready:true}).offlineReady(),true);
+ assert.equal(await api({version:'men-of-purpose-v7-youtube-worship',ready:false}).offlineReady(),false);
+ assert.equal(await api({version:'men-of-purpose-v7-youtube-worship',ready:true}).offlineReady(),true);
  const handlers={};let available=true,result,wait;
  const ctx={URL,Set,Promise,caches:{open:async()=>({match:async path=>available?{ok:true}:path==='./bible/web.json'?undefined:{ok:true}})},self:{registration:{scope:'https://example.org/app/'},addEventListener:(name,fn)=>handlers[name]=fn}};
  vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(base,'sw.js'),'utf8'),ctx);
  const request=version=>({data:{type:'MOP_OFFLINE_STATUS',version},ports:[{postMessage:data=>result=data}],waitUntil:p=>wait=p});
- handlers.message(request('men-of-purpose-v6-web-community-review'));await wait;assert.equal(result.ready,true);
- available=false;handlers.message(request('men-of-purpose-v6-web-community-review'));await wait;assert.equal(result.ready,false);
+ handlers.message(request('men-of-purpose-v7-youtube-worship'));await wait;assert.equal(result.ready,true);
+ available=false;handlers.message(request('men-of-purpose-v7-youtube-worship'));await wait;assert.equal(result.ready,false);
  available=true;handlers.message(request('future-release'));await wait;assert.equal(result.ready,false);
 });

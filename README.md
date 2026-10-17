@@ -9,7 +9,7 @@ This is the review build on `development/men-of-purpose-2026-10-17`. Nothing in 
 - Official, pinned **World English Bible Classic**: 66 books, 1,189 chapters, 31,103 verse markers; complete offline reading after a successful online installation. Publisher source archives, reproducible import and independent verse checks are included. No third-party Scripture API.
 - All 40 original devotional drafts with prayers, challenges, contextual readings and reflection questions. Original first-seven messages retained; seven supplemental biblical stories. Every day is labelled for editorial review.
 - Green, cream and gold polish, original logo, accessible controls and mobile layouts.
-- Twelve monthly themes, month welcome and 40 curated day/song pairings drawn from four verified Apple Music recordings. Music playback needs connectivity and the streaming service.
+- Twelve monthly themes, month welcome and 40 curated day/song pairings drawn from four official YouTube uploads. Music playback needs connectivity and the streaming service.
 - Member-created public/private study groups, leader moderation, platform admin oversight, private-by-default community reflections with explicit sharing, and independently reviewed devotional submissions. **Community stays disabled until its staged schema is approved and tested against hosted staging.**
 - Account isolation and optimistic sync retained; stale authentication response handling and backup validation repaired.
 
