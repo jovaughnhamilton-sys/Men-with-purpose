@@ -36,7 +36,7 @@ const root=document.getElementById('content');if(!root)return;
 const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;
 while((n=walker.nextNode())){
  const p=n.parentElement;
- if(!p||['SCRIPT','STYLE','TEXTAREA','OPTION'].includes(p.tagName)||p.closest('.scripture,.journal-entry,.chapter-verse,#devotionalBible,#bibleText'))continue;
+ if(!p||['SCRIPT','STYLE','TEXTAREA','OPTION'].includes(p.tagName)||p.closest('.scripture,.journal-entry,.chapter-verse,#devotionalBible,#bibleText,[translate="no"],.mop-user-content'))continue;
  let src=original.get(n);if(src===undefined){src=n.nodeValue;original.set(n,src)}
  const next=translateText(src,lang);if(n.nodeValue!==next)n.nodeValue=next;
 }

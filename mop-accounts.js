@@ -22,11 +22,11 @@ function renderCloud(){const el=document.getElementById('cloudPanel');if(!el)ret
  cloudStatus(accountMessage||'ready');
 }
 const accountRedirect=()=>new URL('./',location.href).href;
-async function cloudSignIn(signup){const e=document.getElementById('accountEmail'),p=document.getElementById('accountPassword');if(!e.checkValidity()||p.value.length<8)return cloudStatus('invalid');const email=e.value.trim(),password=p.value;p.value='';
- try{const {data,error}=signup?await cloudClient.auth.signUp({email,password,options:{emailRedirectTo:accountRedirect()}}):await cloudClient.auth.signInWithPassword({email,password});if(error)throw error;
+async function cloudSignIn(signup){const e=document.getElementById('accountEmail'),p=document.getElementById('accountPassword');if(!e.checkValidity()||p.value.length<8)return cloudStatus('invalid');const email=e.value.trim(),password=p.value,epoch=accountEpoch;p.value='';
+ try{const {data,error}=signup?await cloudClient.auth.signUp({email,password,options:{emailRedirectTo:accountRedirect()}}):await cloudClient.auth.signInWithPassword({email,password});if(epoch!==accountEpoch)return;if(error)throw error;
  // A returned user without a session has NOT authenticated.
- if(data.session){await activateAccount(data.session.user);cloudStatus('ready')}else{cloudStatus('verify')}
- }catch{cloudStatus('failed')}
+ if(data.session){await activateAccount(data.session.user)}else{cloudStatus('verify')}
+ }catch{if(epoch===accountEpoch)cloudStatus('failed')}
 }
 async function resendVerification(){const e=document.getElementById('accountEmail');if(!e.checkValidity())return cloudStatus('invalid');try{const {error}=await cloudClient.auth.resend({type:'signup',email:e.value.trim(),options:{emailRedirectTo:accountRedirect()}});if(error)throw error;cloudStatus('sent')}catch{cloudStatus('failed')}}
 async function cloudOAuth(provider){if(!['google','apple'].includes(provider))return;try{const {error}=await cloudClient.auth.signInWithOAuth({provider,options:{redirectTo:accountRedirect()}});if(error)throw error}catch{cloudStatus('failed')}}
@@ -34,10 +34,10 @@ async function initCloud(){if(!cloudReady())return;cloudClient=window.supabase.c
  cloudClient.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){deactivateAccount();return}if(session?.user)setTimeout(()=>verifyAccount(),0)});
  await verifyAccount();document.addEventListener('change',e=>{if(e.target.id==='mop-language')renderCloud()});window.addEventListener('online',()=>syncAccount());window.addEventListener('focus',()=>verifyAccount());
 }
-async function verifyAccount(){const epoch=accountEpoch;try{const {data,error}=await cloudClient.auth.getUser();if(epoch!==accountEpoch)return;if(error||!data?.user){if(error&&(error.status===401||error.status===403||['refresh_token_not_found','refresh_token_already_used','session_not_found','user_not_found'].includes(error.code)))deactivateAccount();else if(!cloudUser)renderCloud();return}await activateAccount(data.user)}catch{cloudStatus('offline')}}
+async function verifyAccount(){const epoch=accountEpoch;try{const {data,error}=await cloudClient.auth.getUser();if(epoch!==accountEpoch)return;if(error||!data?.user){if(!error||error&&(error.status===401||error.status===403||['refresh_token_not_found','refresh_token_already_used','session_not_found','user_not_found'].includes(error.code)))deactivateAccount();else if(!cloudUser)renderCloud();return}await activateAccount(data.user)}catch{if(epoch===accountEpoch)cloudStatus('offline')}}
 async function activateAccount(user){if(accountScope===user.id&&cloudUser){cloudUser=user;await syncAccount();return}clearTimeout(accountTimer);accountEpoch++;cloudUser=user;accountScope=user.id;accountBusy=false;accountReady=false;accountMessage='loading';render();await syncAccount()}
 function deactivateAccount(){clearTimeout(accountTimer);accountEpoch++;accountScope=null;cloudUser=null;accountReady=false;accountBusy=false;accountMessage='';render()}
-async function cloudSignOut(){try{const {error}=await cloudClient.auth.signOut({scope:'local'});if(error)throw error;deactivateAccount()}catch{cloudStatus('logoutFailed')}}
+async function cloudSignOut(){const epoch=accountEpoch;try{const {error}=await cloudClient.auth.signOut({scope:'local'});if(epoch!==accountEpoch)return;if(error)throw error;deactivateAccount()}catch{if(epoch===accountEpoch)cloudStatus('logoutFailed')}}
 function dataSnapshot(){return {app:'Men of Purpose',version:2,name:get('name',''),completed:completed(),bookmarks:bookmarks(),journalEntries:journal(),readingDates:get('readingDates',[]),fontSize:get('fontSize',18),reminder:get('reminder',{enabled:false,time:'09:00'})}}
 function validSnapshot(v){return v?.app==='Men of Purpose'&&v.version===2&&typeof v.name==='string'&&Array.isArray(v.completed)&&v.completed.every(n=>Number.isInteger(n)&&n>=1&&n<=40)&&Array.isArray(v.bookmarks)&&v.bookmarks.every(b=>b&&typeof b.book==='string'&&Number.isInteger(b.chapter)&&Number.isInteger(b.verse)&&typeof b.text==='string')&&Array.isArray(v.journalEntries)&&v.journalEntries.every(j=>j&&typeof j.id==='string'&&typeof j.text==='string'&&typeof j.date==='string'&&typeof j.answered==='boolean')&&Array.isArray(v.readingDates)&&v.readingDates.every(d=>typeof d==='string')&&Number.isFinite(v.fontSize)&&v.fontSize>=14&&v.fontSize<=26&&typeof v.reminder?.enabled==='boolean'&&typeof v.reminder.time==='string'}
 function applyAccountSnapshot(v){if(!validSnapshot(v))throw Error('Invalid account data');for(const k of ACCOUNT_FIELDS)localStorage.setItem(storageKey(k),JSON.stringify(v[k]));setAccountMeta('dirty',false);render()}
