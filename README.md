@@ -59,3 +59,5 @@ Review the completed drafts and preview, grant repository integration write acce
 ## Daily calendar
 
 The home screen now offers 365 distinct, date-based devotional drafts across twelve monthly themes, with Lent/Easter scheduling, December Christmas readings, and a leap-year bonus. The original 40-day journey is optional and retains its existing progress. See [daily calendar details](docs/DAILY-CALENDAR.md).
+
+Daily calendar readings also include a specific YouTube song and reflection connection, with 365 distinct links and a leap-day extra. See [daily music](docs/DAILY-MUSIC.md) for editorial sources and date behavior.

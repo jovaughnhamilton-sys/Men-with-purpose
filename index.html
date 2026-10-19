@@ -91,7 +91,7 @@ else if(screen==='more'){content.innerHTML=`<div class="eyebrow">Personalize you
 else if(screen==='community'){content.innerHTML='<h2>Community</h2><div id="communityPanel" lang="en" translate="no"></div>';if(typeof renderCommunity==='function')renderCommunity()}
 const experienceDay=screen==='home'?0:selected;if(screen!=='daily')window.MOPExperience?.enhance({screen,day:experienceDay,theme:screen==='home'?MOPCalendar.forDate().title:themes[experienceDay-1],reference:screen==='home'?MOPCalendar.forDate().ref:readings[experienceDay-1]?.ref});window.MOPUpdates?.decorate();
 }
-</script><script src="mop-accounts.js"></script><script src="mop-community.js"></script><script src="mop-experience.js"></script><script src="mop-updates.js"></script><script src="mop-daily.js"></script><script>
+</script><script src="mop-accounts.js"></script><script src="mop-community.js"></script><script src="devotional-music.js"></script><script src="mop-experience.js"></script><script src="mop-updates.js"></script><script src="mop-daily.js"></script><script>
 render();window.addEventListener('load',()=>initCloud().then(()=>{if(screen==='more')renderCloud()}));reminderCheck();async function refreshOfflineStatus(){window.MOP_OFFLINE_READY=await MOPBible.offlineReady();const status=document.getElementById('offlineStatus');if(status)status.textContent=window.MOP_OFFLINE_READY?'Bible downloaded · Ready for offline reading':'Offline download is not ready. Keep the app connected, then reopen the Bible.'}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshOfflineStatus()});
 </script><script src="mop-languages.js"></script></body></html>

@@ -28,7 +28,7 @@ async function passage(ref){
   const notes=verses.flatMap(v=>(source.notes[`${query.chapter}:${v.verse}`]||[]).map(text=>({verse:v.verse,text})));
   return {verses,notes,superscriptions:query.start===null?(source.superscriptions[query.chapter]||[]):[],translation:data.translation};
 }
-const offlineVersion='men-of-purpose-v9-daily-calendar';
+const offlineVersion='men-of-purpose-v10-daily-music';
 async function offlineReady(){
   // `serviceWorker.ready` may refer to an older worker after a failed update.
   // Ask the controlling worker to verify this release's complete offline cache.
