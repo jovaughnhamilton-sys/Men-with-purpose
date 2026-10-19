@@ -20,13 +20,18 @@ const server=http.createServer((req,res)=>{
    await page.clock.setFixedTime(new Date('2026-10-18T23:59:00-04:00'));
    await page.goto(origin,{waitUntil:'networkidle'});
    assert.match(await page.locator('#daily-devotional-card').innerText(),/Hearing With Understanding/);
+   const previousSong=await page.locator('.mop-listen').getAttribute('href');
    await page.clock.setFixedTime(new Date('2026-10-19T00:01:00-04:00'));
    await page.evaluate(()=>window.dispatchEvent(new Event('focus')));
    assert.match(await page.locator('#daily-devotional-card').innerText(),/An Honest Shared Memory/);
+   const todaySong=await page.locator('.mop-listen').getAttribute('href');
+   assert.notEqual(todaySong,previousSong);
    await page.evaluate(()=>put('completed',[1,2,3]));
    await page.getByRole('button',{name:'Start today’s devotional →',exact:true}).click();
    await page.locator('#devotionalBible .scripture').waitFor();
    assert.match(await page.locator('#content').innerText(),/You do not have to edit your story/);
+   assert.equal(await page.locator('.mop-listen').getAttribute('href'),todaySong);
+   assert.equal(await page.locator('#mop-song-title').innerText(),'Altar');
    await page.locator('#dailyReflection').fill('Private calendar reflection <img src=x onerror=alert(1)>');
    // A date change must not destroy a reflection currently being written.
    await page.clock.setFixedTime(new Date('2026-10-20T00:01:00-04:00'));
@@ -39,22 +44,28 @@ const server=http.createServer((req,res)=>{
    await page.locator('#daily-next').click();
    await page.locator('#devotionalBible .scripture').waitFor();
    assert.match(await page.locator('#content').innerText(),/Commitment With Specifics/);
+   assert.notEqual(await page.locator('.mop-listen').getAttribute('href'),todaySong);
+   assert.equal(await page.locator('#mop-song-title').innerText(),'Man Of Your Word');
    await page.locator('#daily-prev').click();
    assert.match(await page.locator('#dailyReflection').inputValue(),/Private calendar reflection/);
    assert.equal(await page.locator('#dailyReflection img').count(),0);
+   assert.equal(await page.locator('.mop-listen').getAttribute('href'),todaySong);
    await page.evaluate(()=>MOPDaily.browse());await page.locator('#daily-month').selectOption('11');
    assert.equal(await page.locator('[data-daily-date]').count(),31);
    await page.locator('[data-daily-date="2026-12-25"]').click();
    await page.locator('#devotionalBible .scripture').waitFor();
    assert.match(await page.locator('#content').innerText(),/Good News of Great Joy/);
+   assert.equal(await page.locator('#mop-song-title').innerText(),'Joy To The World');
    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
    await page.waitForFunction(async()=>await MOPBible.offlineReady());
    await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});
    await page.evaluate(()=>MOPDaily.open('2027-03-28'));
    await page.locator('#devotionalBible .scripture').waitFor();
    assert.match(await page.locator('#content').innerText(),/He Is Risen/);
+   assert.equal(await page.locator('#mop-song-title').innerText(),'Living Hope');
+   assert.match(await page.locator('.mop-listen').getAttribute('href'),/youtube\.com\/watch\?v=/);
    assert.deepEqual(errors,[]);
-   if(width===390)await page.screenshot({path:'/tmp/mop-daily-mobile.png',fullPage:true});
+   if(width===390)await page.screenshot({path:'/tmp/mop-daily-music-mobile.png',fullPage:true});
    await context.close();console.log(`PASS: ${width}px midnight rollover, annual reader, private reflections, month browser, Christmas, and offline Easter`);
   }
  }finally{await browser.close();await new Promise(resolve=>server.close(resolve));}

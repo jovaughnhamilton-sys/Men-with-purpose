@@ -1,6 +1,8 @@
 /* Men of Purpose: original theme curation; licensed services host all music. */
 (function (root) {
   'use strict';
+  const music = root.MOPMusic || (typeof require==='function' ? require('./devotional-music.js') : null);
+  const calendar = root.MOPCalendar || (typeof require==='function' ? require('./mop-calendar.js') : null);
   const songs = [
     {id:'altar',title:'Altar',artist:'Hulvey & Forrest Frank',style:'Christian hip-hop / worship',url:'https://www.youtube.com/watch?v=D9Ol15yaf_4',service:'YouTube',connection:'An invitation to surrender and bring your whole life before God.'},
     {id:'good-day',title:'GOOD DAY',artist:'Forrest Frank',style:'Christian pop / praise',url:'https://www.youtube.com/watch?v=Uc_HxKMKB_E',service:'YouTube',connection:'A prompt to practice gratitude and notice God’s goodness in ordinary life.'},
@@ -28,7 +30,12 @@
   function themeFor(date) { return months[date.getMonth()]; }
   function songFor(day,date) {
     const valid=Number.isInteger(day)&&day>=1&&day<=40;
-    return songs.find(song=>song.id===(valid?daySongs[day-1]:themeFor(date).song));
+    if(valid)return songs.find(song=>song.id===daySongs[day-1]);
+    const devotional=calendar.forDate(date);
+    const pairing=music.pairings[devotional.id];
+    if(!pairing)throw new Error('The devotional song pairing is missing.');
+    const song=music.songs.find(song=>song.id===pairing.songId);
+    return {...song,connection:pairing.connection};
   }
   const escape = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function read(key) { try {return root.localStorage.getItem(key);} catch {return null;} }
@@ -41,7 +48,7 @@
   function songMarkup(day,date,theme,reference) {
     const song=songFor(day,date);
     const context=theme?`Pairs with ${theme}${reference?' · '+reference:''}.`:`Pairs with this month’s focus: ${themeFor(date).title}.`;
-    return `<section class="card mop-worship" id="mop-daily-song" aria-labelledby="mop-song-title"><div class="eyebrow">Song for your devotional</div><h3 id="mop-song-title">${escape(song.title)}</h3><p class="mop-artist">${escape(song.artist)}</p><span class="pill">${escape(song.style)}</span><p>${escape(song.connection)}</p><p class="muted">${escape(context)}</p><a class="btn mop-listen" href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">Listen on ${escape(song.service)} <span aria-hidden="true">↗</span><span class="sr-only"> (opens a new tab)</span></a><p class="notice">Music opens on YouTube and needs an internet connection.  Scripture guides our teaching; songs are optional companions.</p></section>`;
+    return `<section class="card mop-worship" id="mop-daily-song" aria-labelledby="mop-song-title"><div class="eyebrow">Today’s devotional song</div><h3 id="mop-song-title">${escape(song.title)}</h3><p class="mop-artist">${escape(song.artist)}</p><span class="pill">${escape(song.style)}</span><p>${escape(song.connection)}</p><p class="muted">${escape(context)}</p><a class="btn mop-listen" href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">Listen on ${escape(song.service)} <span aria-hidden="true">↗</span><span class="sr-only"> (opens a new tab)</span></a><p class="notice">Music opens on YouTube and needs an internet connection.  Music is part of this daily devotional. Scripture guides our teaching.</p></section>`;
   }
   function enhance(options={}) {
     const document=root.document;

@@ -36,3 +36,7 @@ Daily reflections use `reflection-calendar-YYYY-MM-DD` journal IDs with the exis
 - `npm run test:upgrades`: historical installed releases upgraded to the new complete offline shell; saved journal/progress retained; unsaved-text update protection and failed-install recovery.
 
 Browser checks use local servers with live account/backend traffic disabled. They do not verify production sign-in providers or email delivery. The service worker and Bible readiness handshake advance together to v9 and precache all three new runtime files.
+
+## Daily music
+
+Calendar devotionals now have explicit music assignments that move with the reading, including Easter and Christmas. See [daily music](DAILY-MUSIC.md). The service worker and readiness handshake now use v10.
