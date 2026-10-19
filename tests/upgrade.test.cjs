@@ -8,7 +8,7 @@ const {execFileSync}=require('node:child_process');
 let playwright;
 try{playwright=require('playwright')}catch{playwright=require(path.join(process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||'/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules','playwright'))}
 const root=path.resolve(__dirname,'..'),scope='/Men-with-purpose/';
-const versions={v6:'f4b9de5',v7:'9cb3cb4'};
+const versions={v6:'f4b9de5',v7:'7abaf84',v8:'c6a514f'};
 const sourceCache=new Map(),requests=[],results=[];
 let release='v6',failAsset='',future=false;
 function source(name){
@@ -19,7 +19,7 @@ function source(name){
     if(!sourceCache.has(key))sourceCache.set(key,execFileSync('git',['show',versions[release]+':'+name],{cwd:root,maxBuffer:20*1024*1024}));
     value=sourceCache.get(key);
   }else value=fs.readFileSync(path.join(root,name));
-  if(future&&(name.endsWith('.js')||name==='index.html'))value=Buffer.from(value.toString().replaceAll('men-of-purpose-v8-reliable-updates','men-of-purpose-v9-upgrade-test'));
+  if(future&&(name.endsWith('.js')||name==='index.html'))value=Buffer.from(value.toString().replaceAll('men-of-purpose-v9-daily-calendar','men-of-purpose-v9-upgrade-test'));
   return value;
 }
 const server=http.createServer((req,res)=>{
@@ -66,13 +66,13 @@ async function check(name,fn){await fn();results.push(name);console.log('PASS: '
   const executablePath=process.env.QA_CHROMIUM_EXECUTABLE;
   const browser=await playwright.chromium.launch({headless:true,...(executablePath?{executablePath}:{}),args:['--no-sandbox']});
   try{
-    for(const old of ['v6','v7'])await check(`${old} upgrade bypasses fresh HTTP cache, preserves private data and complete offline Bible`,async()=>{
+    for(const old of ['v6','v7','v8'])await check(`${old} upgrade bypasses fresh HTTP cache, preserves private data and complete offline Bible`,async()=>{
       release=old;future=false;failAsset='';
       const context=await browser.newContext({viewport:{width:390,height:844}}),page=await context.newPage();
       const external=[];page.on('request',request=>{if(new URL(request.url()).origin!==origin)external.push(request.url())});
       try{
         await page.goto(url,{waitUntil:'networkidle'});
-        const oldVersion=old==='v6'?'men-of-purpose-v6-web-community-review':'men-of-purpose-v7-youtube-worship';
+        const oldVersion={v6:'men-of-purpose-v6-web-community-review',v7:'men-of-purpose-v7-youtube-worship',v8:'men-of-purpose-v8-reliable-updates'}[old];
         await waitVersion(page,oldVersion);
         assert.match(await page.locator('.mop-listen').innerText(),old==='v6'?/Apple Music/:/YouTube/);
         const before=await seed(page);
@@ -81,7 +81,7 @@ async function check(name,fn){await fn();results.push(name);console.log('PASS: '
         const count=requests.length;
         release='new';
         await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();await r.update()});
-        await waitVersion(page,'men-of-purpose-v8-reliable-updates');
+        await waitVersion(page,'men-of-purpose-v9-daily-calendar');
         // Claiming a new worker does not replace an old page's running JavaScript.
         assert.equal(await page.locator('#journalText').inputValue(),'Unsaved writing must not be interrupted.');
         assert.deepEqual(await stores(page),before);
@@ -111,7 +111,7 @@ async function check(name,fn){await fn();results.push(name);console.log('PASS: '
       release='new';future=false;failAsset='';
       const context=await browser.newContext(),page=await context.newPage();
       try{
-        await page.goto(url,{waitUntil:'networkidle'});await waitVersion(page,'men-of-purpose-v8-reliable-updates');
+        await page.goto(url,{waitUntil:'networkidle'});await waitVersion(page,'men-of-purpose-v9-daily-calendar');
         assert.equal(await page.locator('#mop-update-banner').count(),0,'First installation must not show an update banner');
         const before=await seed(page);
         await page.evaluate(()=>tab('journal'));

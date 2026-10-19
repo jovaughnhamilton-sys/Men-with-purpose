@@ -10,7 +10,7 @@
   const months = [
     {title:'Made New in Christ',ref:'2 Corinthians 5:17',focus:'Begin again with grace, and practice the choices of a renewed life.',song:'altar'},
     {title:'Love That Serves',ref:'John 13:34–35',focus:'Let Christ’s love shape your relationships through patient, practical care.',song:'altar'},
-    {title:'Rooted in Prayer',ref:'Philippians 4:6–7',focus:'Bring your needs to God with thanksgiving, and make room to listen.',song:'trust'},
+    {title:'Returning to God',ref:'Philippians 4:6–7',focus:'Return to God with prayer, honest repentance, and renewed dependence on Christ.',song:'trust'},
     {title:'Living Hope',ref:'1 Peter 1:3–5',focus:'Remember the living hope of Jesus’ resurrection amid everyday challenges.',song:'praise'},
     {title:'Faithful in the Everyday',ref:'Colossians 3:17',focus:'Let ordinary words and work become opportunities to honor Christ.',song:'good-day'},
     {title:'Leading Through Service',ref:'Mark 10:42–45',focus:'Follow Jesus’ example by serving people rather than seeking status.',song:'altar'},
@@ -70,8 +70,9 @@
   // Refresh only when the open app crosses a local calendar day; no background scheduling.
   if(root.document&&root.addEventListener) {
     let dateKey=dailyKey(new Date());
-    function refresh(){const next=dailyKey(new Date());if(next!==dateKey){dateKey=next;if(typeof root.render==='function')root.render();}}
+    function refresh(){const next=dailyKey(new Date());if(next!==dateKey){dateKey=next;if(typeof root.render==='function'&&typeof screen!=='undefined'&&['home','calendar'].includes(screen))root.render();}}
     root.document.addEventListener('visibilitychange',()=>{if(root.document.visibilityState==='visible')refresh();});
     root.addEventListener('focus',refresh);
+    root.setInterval(refresh,30000);
   }
 })(typeof window!=='undefined'?window:globalThis);
