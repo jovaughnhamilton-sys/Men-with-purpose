@@ -55,3 +55,7 @@ Personal journals and account-scoped caches are not end-to-end encrypted. No jou
 ## Release gates
 
 Review the completed drafts and preview, grant repository integration write access, verify hosted staging with two independent accounts, apply the proposed grant hardening and community migration only with approval, configure trusted admin identity and provider redirects, and approve deployment separately. Do not follow old upload instructions to overwrite `main`.
+
+## Daily calendar
+
+The home screen now offers 365 distinct, date-based devotional drafts across twelve monthly themes, with Lent/Easter scheduling, December Christmas readings, and a leap-year bonus. The original 40-day journey is optional and retains its existing progress. See [daily calendar details](docs/DAILY-CALENDAR.md).

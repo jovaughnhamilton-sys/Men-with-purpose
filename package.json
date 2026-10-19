@@ -3,9 +3,9 @@
   "version": "0.3.0-review",
   "private": true,
   "scripts": {
-    "test": "node accounts.test.cjs && node --test editorial.test.cjs experience.test.cjs community.test.cjs tests/bible.test.cjs && python3 tests/verify-bible-source.py",
+    "test": "node accounts.test.cjs && node --test editorial.test.cjs tests/calendar.test.cjs experience.test.cjs community.test.cjs tests/bible.test.cjs && python3 tests/verify-bible-source.py",
     "test:permissions": "node supabase/tests/community.test.cjs",
-    "test:browser": "node tests/browser.test.cjs",
+    "test:browser": "node tests/browser.test.cjs && node tests/calendar-browser.test.cjs",
     "test:upgrades": "node tests/upgrade.test.cjs"
   },
   "devDependencies": {
