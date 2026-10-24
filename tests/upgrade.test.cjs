@@ -19,7 +19,7 @@ function source(name){
     if(!sourceCache.has(key))sourceCache.set(key,execFileSync('git',['show',versions[release]+':'+name],{cwd:root,maxBuffer:20*1024*1024}));
     value=sourceCache.get(key);
   }else value=fs.readFileSync(path.join(root,name));
-  if(future&&(name.endsWith('.js')||name==='index.html'))value=Buffer.from(value.toString().replaceAll('men-of-purpose-v10-daily-music','men-of-purpose-v11-upgrade-test'));
+  if(future&&(name.endsWith('.js')||name==='index.html'))value=Buffer.from(value.toString().replaceAll('men-of-purpose-v11-short-readings-graphics','men-of-purpose-v12-upgrade-test'));
   return value;
 }
 const server=http.createServer((req,res)=>{
@@ -81,7 +81,7 @@ async function check(name,fn){await fn();results.push(name);console.log('PASS: '
         const count=requests.length;
         release='new';
         await page.evaluate(async()=>{const r=await navigator.serviceWorker.getRegistration();await r.update()});
-        await waitVersion(page,'men-of-purpose-v10-daily-music');
+        await waitVersion(page,'men-of-purpose-v11-short-readings-graphics');
         // Claiming a new worker does not replace an old page's running JavaScript.
         assert.equal(await page.locator('#journalText').inputValue(),'Unsaved writing must not be interrupted.');
         assert.deepEqual(await stores(page),before);
@@ -111,7 +111,7 @@ async function check(name,fn){await fn();results.push(name);console.log('PASS: '
       release='new';future=false;failAsset='';
       const context=await browser.newContext(),page=await context.newPage();
       try{
-        await page.goto(url,{waitUntil:'networkidle'});await waitVersion(page,'men-of-purpose-v10-daily-music');
+        await page.goto(url,{waitUntil:'networkidle'});await waitVersion(page,'men-of-purpose-v11-short-readings-graphics');
         assert.equal(await page.locator('#mop-update-banner').count(),0,'First installation must not show an update banner');
         const before=await seed(page);
         await page.evaluate(()=>tab('journal'));
@@ -119,7 +119,7 @@ async function check(name,fn){await fn();results.push(name);console.log('PASS: '
         await page.evaluate(()=>{window.__upgradeDocument='original'});
         future=true;
         await page.evaluate(()=>MOPUpdates.check(true));
-        await waitVersion(page,'men-of-purpose-v11-upgrade-test');
+        await waitVersion(page,'men-of-purpose-v12-upgrade-test');
         await page.locator('#mop-update-refresh').waitFor();
         assert.equal(await page.locator('#journalText').inputValue(),'Unfinished update-safe prayer.');
         assert.equal(await page.evaluate(()=>window.__upgradeDocument),'original');

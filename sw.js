@@ -1,7 +1,7 @@
 'use strict';
 // Increment after changing any shell or Bible asset. Never cache user/account responses.
-const CACHE='men-of-purpose-v10-daily-music';
-const ASSETS=['./','./index.html','./icon.svg','./app-icon.png','./men-of-purpose-logo.png','./manifest.webmanifest','./cloud-config.js','./mop-languages.js','./mop-accounts.js','./mop-bible.js','./bible/web.json','./devotional-content.js','./annual-content.js','./mop-calendar.js','./mop-daily.js','./mop-community.js','./devotional-music.js','./mop-experience.js','./mop-updates.js','./polish.css','./vendor/supabase-2.117.3.js'];
+const CACHE='men-of-purpose-v11-short-readings-graphics';
+const ASSETS=['./','./index.html','./icon.svg','./app-icon.png','./men-of-purpose-logo.png','./manifest.webmanifest','./cloud-config.js','./mop-languages.js','./mop-accounts.js','./mop-bible.js','./bible/web.json','./devotional-content.js','./annual-content.js','./mop-calendar.js','./mop-daily.js','./mop-community.js','./devotional-music.js','./mop-experience.js','./mop-updates.js','./polish.css','./commands-content.js','./mop-devotional-tools.js','./assets/devotional-illustrations.webp','./vendor/supabase-2.117.3.js'];
 const assetURLs=new Set(ASSETS.map(path=>new URL(path,self.registration.scope).href));
 self.addEventListener('install',event=>{
   // Atomic install: a missing asset must not leave a worker claiming full offline support.
